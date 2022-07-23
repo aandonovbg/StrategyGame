@@ -18,30 +18,33 @@ public class Building {
         this.constructionTime = constructionTime;
     }
 
-    public static void build(ArrayList<String> workers, String buildingName, int buildingConstructionTime, int workerConstructSpeed) {
-        if (workers.size() > 1) {
-
-            System.out.println("Currently you have " + workers.size() + " Workers available");
-            System.out.println("How many of them you want to use?");
-            Scanner sc = new Scanner(System.in);
-            byte workersUsed = sc.nextByte();
-            try {
-                if (workersUsed < 1 || workersUsed > workers.size()) {
-                    System.out.println("Players range can be from 1 to " + workers.size());
-                    Methods.workersUsedMenu(workers);
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid choice! Enter Digit from 1 to " + workers.size());
-                System.out.println();
-                Methods.workersUsedMenu(workers);
+    public static boolean uniqueBuilding(ArrayList<String> buildings) {
+        boolean isUnique = true;
+        for (int i = 0; i < buildings.size(); i++) {
+            if (!buildings.get(i).equalsIgnoreCase("Town Hall")||!buildings.get(i).equalsIgnoreCase("Hospital")) {
+                isUnique = false;
+                break;
             }
+        }
+        return isUnique;
+    }
 
-            int constructionDuration = buildingConstructionTime / (workerConstructSpeed * workersUsed);
-            System.out.println(buildingName + " will be build after " + constructionDuration + " seconds");
-        } else {
-            System.out.println("Currently you have 1 Worker available");
-            int constructionDuration = buildingConstructionTime / workerConstructSpeed;
-            System.out.println(buildingName + " will be build after " + constructionDuration + " seconds");
+    public static void build(ArrayList<String> buildings,ArrayList<String> workers, String buildingName, int buildingConstructionTime, int workerConstSpeed) {
+        if (uniqueBuilding(buildings)){ //
+            System.out.println("You can build only 1 "+buildingName + "in your Town");
+            return;
+        }else {
+            if (workers.size() > 1) {
+                System.out.println("Currently you have " + workers.size() + " available.");
+                System.out.println("How many do you want to use");
+                int workersUsed=Worker.workersUsedMenu(workers);
+                int constructionDuration = buildingConstructionTime / (workerConstSpeed * workersUsed);
+                System.out.println(buildingName + " will be build after " + constructionDuration + " seconds");
+            } else {
+                System.out.println("Currently you have 1 Worker available");
+                int constructionDuration = buildingConstructionTime / workerConstSpeed;
+                System.out.println(buildingName + " will be build after " + constructionDuration + " seconds");
+            }
         }
     }
 }
