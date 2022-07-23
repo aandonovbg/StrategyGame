@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Main {
 
@@ -7,9 +7,16 @@ public class Main {
         ArrayList<Worker> workersObj=new ArrayList<>();
         ArrayList<Soldier> soldiersObj=new ArrayList<>();
         ArrayList<Building> buildingsObj=new ArrayList<>();
-        workersObj.add(new Worker("Worker"));
+       // workersObj.add(new Worker("Worker"));
 
-        Methods.startMenu(buildingsObj,workersObj);
+        //Methods.startMenu(buildingsObj,workersObj);
+        for (int i = 0; i < 10; i++) {
+            workersObj.add(new Worker());
+
+        }
+       for (int i = 0; i < workersObj.size(); i++) {
+           System.out.println(workersObj.get(i).toString());
+        }
 
     }
 }
