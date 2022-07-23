@@ -6,43 +6,49 @@ public class Worker {
     int health;
     int constrSpeed;
 
-    int numberOfObjects;
+
 
 
     public Worker(){
         this.unitName="Worker";
         this.health=10;
         this.constrSpeed=5;
-        this.numberOfObjects++;
+
     }
 
     public Worker(String unitName){
         this.unitName=unitName;
         this.health=10;
         this.constrSpeed=5;
-        this.numberOfObjects++;
-    }
 
-    public static void build(ArrayList<String> buildings, ArrayList<String> workers, String buildingName, int buildingConstructionTime, int workerConstSpeed) {
-        if (Building.uniqueBuilding(buildings)){ //
+    }
+public int getConstrSpeed(){
+        return constrSpeed;
+}
+    public static void build(String buildingName,int buildingEndurance,int buildingConstrTime,ArrayList<Building> buildingsObj, ArrayList<Worker> workersObj) {
+        if (Building.uniqueBuilding(buildingName,buildingsObj )){ // if TRUE
             System.out.println("You can build only 1 "+buildingName + "in your Town");
             return;
         }else {
-            if (workers.size() > 1) {
-                System.out.println("Currently you have " + workers.size() + " available.");
+
+            if (workersObj.size() > 1) {
+                System.out.println("Currently you have " + workersObj.size() + " available.");
                 System.out.println("How many do you want to use");
-                int workersUsed=workersUsedMenu(workers);
-                int constructionDuration = buildingConstructionTime / (workerConstSpeed * workersUsed);
+                int workersUsed=workersUsedMenu(workersObj);
+                buildingsObj.add(new Building(buildingName,buildingEndurance,buildingConstrTime));
+                int constructionDuration = buildingsObj.get(buildingsObj.size()-1).constructionTime / (workersObj.get(0).constrSpeed * workersUsed);
                 System.out.println(buildingName + " will be build after " + constructionDuration + " seconds");
             } else {
+
                 System.out.println("Currently you have 1 Worker available");
-                int constructionDuration = buildingConstructionTime / workerConstSpeed;
+                buildingsObj.add(new Building(buildingName,buildingEndurance,buildingConstrTime));
+                int constructionDuration = buildingsObj.get(buildingsObj.size()-1).constructionTime / workersObj.get(0).constrSpeed;
                 System.out.println(buildingName + " will be build after " + constructionDuration + " seconds");
             }
         }
     }
 
-    public static int workersUsedMenu(ArrayList<String> workers) {
+    public static int workersUsedMenu(ArrayList<Worker> workers) {
 
         Scanner sc = new Scanner(System.in);
         String workersUsed = sc.nextLine();

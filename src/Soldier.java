@@ -23,18 +23,27 @@ public class Soldier {
         this.health = 50;
     }
 
-    public void attack(ArrayList<String> soldiers, String buildingName, int buildingEndurance, int attackDuration) {
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public static void attack(ArrayList<Soldier> soldiersObj, String buildingName, int buildingEndurance, int attackDuration) {
         int normalSoldiersCount = 0;
         int eliteSoldierCount = 0;
         int eliteSoldiersUsed = 0;
         int normalSoldiersUsed = 0;
-        if (soldiers.size() > 1) {
+        int totalAttackUsed=0;
+        if (soldiersObj.size() > 1) {
 
 
-            for (int i = 0; i < soldiers.size(); i++) {
-                if (soldiers.get(i).equals("Soldier")) {
+            for (int i = 0; i < soldiersObj.size(); i++) {
+                if (soldiersObj.get(i).unitName.equals("Soldier")) {
                     normalSoldiersCount++;
-                } else if (soldiers.get(i).equals("Elite Soldier")) {
+                } else if (soldiersObj.get(i).unitName.equals("Elite Soldier")) {
                     eliteSoldierCount++;
                 }
             }
@@ -54,12 +63,19 @@ public class Soldier {
                 eliteSoldiersUsed = eliteSoldiersUsed(eliteSoldierCount);
             }
         }
-        System.out.println(this.unitName + " attacked " + buildingName);
 
-        if ((this.attack * normalSoldiersUsed+this.attack*eliteSoldiersUsed) * attackDuration > buildingEndurance) {
+        for (int i = 0; i < soldiersObj.size(); i++) {
+            if (soldiersObj.get(i).unitName.equals("Soldier")) {
+                totalAttackUsed+=soldiersObj.get(i).attack;
+            } else if (soldiersObj.get(i).unitName.equals("Elite Soldier")) {
+                totalAttackUsed+=soldiersObj.get(i).attack;
+            }
+        }
+
+        /*if ((this.attack * normalSoldiersUsed+this.attack*eliteSoldiersUsed) * attackDuration > buildingEndurance) {
             int destructionTime = (this.attack * normalSoldiersUsed+this.attack*eliteSoldiersUsed) * attackDuration - ((this.attack * normalSoldiersUsed+this.attack*eliteSoldiersUsed) * attackDuration - buildingEndurance);
             System.out.println(buildingName + " was destroyed for " + destructionTime + " seconds");
-        }
+        }*/
     }
 
     public static int eliteSoldiersUsed(int eliteSoldierCount) {

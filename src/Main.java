@@ -4,12 +4,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<String> buildings=new ArrayList<>();
-        ArrayList<String> workers=new ArrayList<>();
-        ArrayList<String> soldiers=new ArrayList<>();
-        Worker worker=new Worker();
+        ArrayList<Worker> workersObj=new ArrayList<>();
+        ArrayList<Soldier> soldiersObj=new ArrayList<>();
+        ArrayList<Building> buildingsObj=new ArrayList<>();
+        workersObj.add(new Worker("Worker"));
 
-        Methods.startMenu(buildings, workers, worker);
+        Methods.startMenu(buildingsObj,workersObj);
 
     }
 }
